@@ -31,14 +31,45 @@ void	map_extension(char *map_path)
 		print_error("Error!\nInvalid extension.");
 }
 
-// Resolver problema do get next line
-//(testar o do quisk para verificar se o erro nao e la)
-void	map_shape(char *map_path)
+void	map_shape(t_ms *ms, char *map_path)
 {
 	int		fd;
 	char	*line;
+	int		i;
+	int		vet_len; 
 
 	fd = open(map_path, O_RDONLY);
-	
+	line = get_next_line(fd);
+	i = 0;
+	vet_len = 0;
+	ft_printf("\n");
+	ms->full_map = ft_calloc(sizeof(char *), 7);
+	while (line)
+	{
+		//A porra do erro esta aqui em baixo comentado !!!!!!!!!!! resolve esta merda animal
+		//(motivo: criacao de varios mallocs em um loop :D)
+		/* ms->full_map = ft_calloc(sizeof(char), vet_len + 1); */	
+		ms->full_map[i] = ft_strdup(line);
+		ft_printf("%s", ms->full_map[i]);
+		free(line);
+		i++;
+		vet_len++;
+		line = get_next_line(fd);
+	}
+	ms->full_map[i] = NULL;
+	free_tester(ms);
 	close (fd);
+}
+
+void	free_tester(t_ms *ms)
+{
+	int i;
+
+	i = 0;
+	while(ms->full_map[i])
+	{
+		free (ms->full_map[i++]);
+	}
+	free (ms->full_map);
+	free (ms);
 }

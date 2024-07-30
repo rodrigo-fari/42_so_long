@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 18:41:10 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/07/30 03:05:36 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/07/30 06:15:57 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ typedef struct	s_mainstruc {
 }		t_ms;
 
 //=========     Struct Functions     =========//
-void	map_shape(char *map_path);
+void	free_tester(t_ms *ms);
+void	map_shape(t_ms *ms, char *map_path);
 
 //=========     EndIf     =========//
 #endif

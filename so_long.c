@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 18:37:31 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/07/30 02:48:33 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/07/30 06:12:17 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ void	print_error(char *str)
 
 int main (int argc, char *argv[])
 {
+	t_ms	*ms;
+
+	ms = ft_calloc(sizeof(t_ms), 1);
+	ms->full_map = NULL;
 	if (argc != 2)
 		print_error("Erro!\nInvalid arguments quantity!");
 	map_checker(argv[1]);
 	map_extension(argv[1]);
-	map_shape(argv[1]);
+	map_shape(ms ,argv[1]);
 	return (0);
 }

@@ -5,14 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 19:05:08 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/07/30 03:15:11 by rde-fari         ###   ########.fr       */
+/*   Created: 2024/07/30 04:07:17 by rde-fari          #+#    #+#             */
+/*   Updated: 2024/07/30 05:31:40 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strcpy(char *src, char *dest, int param)
+void	*ft_calloc_gnl(size_t nmemb, size_t size)
+{
+	unsigned char	*ptr;
+	size_t			i;
+	size_t			total_size;
+
+	total_size = nmemb * size;
+	ptr = malloc(total_size);
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (i < total_size)
+	{
+		ptr[i] = 0;
+		i++;
+	}
+	return (ptr);
+}
+
+char	*ft_strcpy_nl(char *src, char *dest, int nl_stop)
 {
 	int	i;
 
@@ -20,7 +39,7 @@ char	*ft_strcpy(char *src, char *dest, int param)
 	while (src[i])
 	{
 		dest[i] = src[i];
-		if (param && src[i] == '\n')
+		if (nl_stop && src[i] == '\n')
 		{
 			i++;
 			break ;
@@ -31,41 +50,7 @@ char	*ft_strcpy(char *src, char *dest, int param)
 	return (dest);
 }
 
-size_t	ft_char_strlen(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_char_strjoin(char *str1, char *str2)
-{
-	size_t	len;
-	char	*ptr;
-	int		i;
-	int		j;
-
-	len = ft_strlen(str1) + ft_strlen(str2);
-	ptr = ft_calloc((len + 1), sizeof(char));
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (str1 && str1[i])
-	{
-		ptr[i] = str1[i];
-		i++;
-	}
-	j = 0;
-	while (str2 && str2[j])
-		ptr[i++] = str2[j++];
-	free(str1);
-	return (ptr);
-}
-
-int	nline_scan(char *str, int c)
+int	ft_check_character(char *str, int c)
 {
 	int	i;
 
@@ -79,4 +64,38 @@ int	nline_scan(char *str, int c)
 		i++;
 	}
 	return (0);
+}
+
+size_t	ft_strlen_gnl(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str && str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin_gnl(char *str1, char *str2)
+{
+	size_t	len;
+	int		i;
+	int		k;
+	char	*joined;
+
+	i = 0;
+	len = ft_strlen_gnl(str1) + ft_strlen_gnl(str2);
+	joined = ft_calloc_gnl((len + 1), sizeof(char));
+	if (!joined)
+		return (NULL);
+	while (str1 && str1[i])
+	{
+		joined[i] = str1[i];
+		i++;
+	}
+	k = 0;
+	while (str2 && str2[k])
+		joined[i++] = str2[k++];
+	free(str1);
+	return (joined);
 }

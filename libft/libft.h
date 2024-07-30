@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:41:20 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/07/30 02:44:14 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/07/30 05:33:19 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,18 +109,15 @@ void	ft_check_char(const char *format, va_list ap, int *total);
 
 //---------Get Next Line Functions---------//
 
-char	*remaining(char *ptr);
 char	*get_next_line(int fd);
-char	*get_esp_line(char	*ptr);
-char	*file_reader(char *ptr, int fd);
-char	*ft_char_strjoin(char *str1, char *str2);
-char	*ft_strcpy(char *src, char *dest, int param);
-
-int		nline_scan(char *str, int c);
-
-size_t	ft_char_strlen(char *str);
-
-void	*ft_calloc(size_t nmemb, size_t size);
+size_t	ft_strlen_gnl(const char *str);
+char	*ft_update_data(char *s_buffer);
+char	*ft_extract_line(char *s_buffer);
+int		ft_check_character(char *str, int c);
+char	*ft_strjoin_gnl(char *str1, char *str2);
+void	*ft_calloc_gnl(size_t nmemb, size_t size);
+char	*ft_read_from_file(char *s_buffer, int fd);
+char	*ft_strcpy_nl(char *src, char *dest, int nl_stop);
 
 //---------End If---------//
 #endif

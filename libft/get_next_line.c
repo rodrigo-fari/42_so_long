@@ -5,96 +5,96 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 17:22:48 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/07/30 02:18:25 by rde-fari         ###   ########.fr       */
+/*   Created: 2024/07/30 04:07:10 by rde-fari          #+#    #+#             */
+/*   Updated: 2024/07/30 05:31:58 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*get_next_line(int fd)
+char	*ft_read_from_file(char *s_buffer, int fd)
 {
-	static char	*ptr;
-	char		*line;
+	char	*temp_buffer;
+	int		bytes_read;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	temp_buffer = ft_calloc_gnl(BUFFER_SIZE + 1, sizeof(char));
+	if (!temp_buffer)
 		return (NULL);
-	ptr = file_reader(ptr, fd);
-	if (!ptr)
+	bytes_read = 1;
+	while (!ft_check_character(s_buffer, '\n') && bytes_read > 0)
 	{
-		free(ptr);
-		return (NULL);
+		bytes_read = read(fd, temp_buffer, BUFFER_SIZE);
+		if (bytes_read < 0)
+		{
+			if (s_buffer)
+				free(s_buffer);
+			free(temp_buffer);
+			return (NULL);
+		}
+		temp_buffer[bytes_read] = '\0';
+		s_buffer = ft_strjoin_gnl(s_buffer, temp_buffer);
 	}
-	line = get_esp_line(ptr);
-	ptr = remaining(ptr);
+	free(temp_buffer);
+	return (s_buffer);
+}
+
+char	*ft_extract_line(char *s_buffer)
+{
+	int		i;
+	int		k;
+	char	*line;
+
+	if (s_buffer[0] == '\0')
+		return (NULL);
+	i = 0;
+	while (s_buffer[i] != '\n' && s_buffer[i])
+		i++;
+	k = i;
+	if (s_buffer[i] == '\n')
+		k++;
+	line = ft_calloc_gnl(k + 1, sizeof(char));
+	if (!line)
+		return (NULL);
+	ft_strcpy_nl(s_buffer, line, 1);
 	return (line);
 }
 
-char	*file_reader(char *ptr, int fd)
+char	*ft_update_data(char *s_buffer)
 {
-	char	*temp_ptr;
-	int		read_return;
+	char	*new_data;
+	int		start;
 
-	temp_ptr = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!temp_ptr)
-		return (NULL);
-	read_return = 1;
-	while (!nline_scan(ptr, '\n') && read_return > 0)
+	start = 0;
+	while (s_buffer[start] && s_buffer[start] != '\n')
+		start++;
+	if (s_buffer[start] == '\0')
 	{
-		read_return = read(fd, temp_ptr, BUFFER_SIZE);
-		if (read_return < 0)
-		{
-			if (ptr)
-				free(ptr);
-			free(temp_ptr);
-			return (NULL);
-		}
-		temp_ptr[read_return] = '\0';
-		ptr = ft_strjoin(ptr, temp_ptr);
-	}
-	free(temp_ptr);
-	return (ptr);
-}
-
-char	*get_esp_line(char	*ptr)
-{
-	char	*str;
-	int		i;
-	int		j;
-
-	if (ptr[0] == '\0')
-		return (NULL);
-	i = 0;
-	while (ptr[i] && ptr[i] != '\n')
-		i++;
-	j = i;
-	if (ptr[i] == '\n')
-		j++;
-	str = ft_calloc(j + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_strcpy(ptr, str, 1);
-	return (str);
-}
-
-char	*remaining(char *ptr)
-{
-	char	*remaining;
-	int		i;
-
-	i = 0;
-	while (ptr[i] && ptr[i] != '\n')
-		i++;
-	if (ptr[i] == '\0')
-	{
-		free(ptr);
+		free(s_buffer);
 		return (NULL);
 	}
-	i++;
-	remaining = ft_calloc(ft_strlen(ptr + i) + 1, sizeof(char));
-	if (!remaining)
+	start++;
+	new_data = ft_calloc_gnl(ft_strlen_gnl(s_buffer + start) + 1, sizeof(char));
+	if (!new_data)
 		return (NULL);
-	ft_strcpy(ptr + i, remaining, 0);
-	free(ptr);
-	return (remaining);
+	ft_strcpy_nl(s_buffer + start, new_data, 0);
+	free(s_buffer);
+	return (new_data);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*line;
+	static char	*s_buffer;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	s_buffer = ft_read_from_file(s_buffer, fd);
+	if (!s_buffer)
+	{
+		free(s_buffer);
+		return (NULL);
+	}
+	line = ft_extract_line(s_buffer);
+	s_buffer = ft_update_data(s_buffer);
+	return (line);
 }
