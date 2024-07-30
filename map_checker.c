@@ -22,6 +22,20 @@ void	map_checker(char *map_path)
 	close (fd);
 }
 
+void	map_folder(const char *map_path)
+{
+	char	*path1;
+	char	*path2;
+	size_t	map_path_len;
+
+	path1 = "/maps/valid_map/";
+	path1 = "/maps/invalid_map/";
+	map_path_len = ft_strlen(map_path);
+	if (ft_strnstr(map_path, path1, map_path_len) && 
+	(ft_strnstr(map_path, path2, map_path_len)) == NULL)
+		print_error("ERRO!\nMap is not in the correct folder.");
+}
+
 void	map_extension(char *map_path)
 {
 	char	*extension;
@@ -31,45 +45,46 @@ void	map_extension(char *map_path)
 		print_error("Error!\nInvalid extension.");
 }
 
-void	map_shape(t_ms *ms, char *map_path)
+void	map_shape(t_map *map, char *map_path)
 {
-	int		fd;
 	char	*line;
-	int		i;
-	int		vet_len; 
+	int		line_len;
+	int		fd;
 
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
-	i = 0;
-	vet_len = 0;
-	ft_printf("\n");
-	ms->full_map = ft_calloc(sizeof(char *), 7);
+	map->map_lines = 0;
+	line_len = ft_strlen(line);
 	while (line)
 	{
-		//A porra do erro esta aqui em baixo comentado !!!!!!!!!!! resolve esta merda animal
-		//(motivo: criacao de varios mallocs em um loop :D)
-		/* ms->full_map = ft_calloc(sizeof(char), vet_len + 1); */	
-		ms->full_map[i] = ft_strdup(line);
-		ft_printf("%s", ms->full_map[i]);
-		free(line);
-		i++;
-		vet_len++;
 		line = get_next_line(fd);
+		map->map_lines += 1;
 	}
-	ms->full_map[i] = NULL;
-	free_tester(ms);
-	close (fd);
+	if (map->map_lines == (line_len - 1))
+		print_error("ERRO!\nMap is not retangular.");
+	close(fd);
 }
 
-void	free_tester(t_ms *ms)
+void	map_to_struct(t_map *map, char *map_path)
 {
-	int i;
+	int		i;
+	int		fd;
+	char	*line;
 
+	fd = open(map_path, O_RDONLY);
+	line = get_next_line(fd);
+	map->map_columns = (ft_strlen(line) - 1);
 	i = 0;
-	while(ms->full_map[i])
+	map->full_map = ft_calloc(sizeof(char *), map->map_lines);
+	while (line)
 	{
-		free (ms->full_map[i++]);
+		map->full_map[i] = ft_strdup(line);
+		ft_printf("%s", map->full_map[i]);
+		free(line);
+		i++;
+		line = get_next_line(fd);
 	}
-	free (ms->full_map);
-	free (ms);
+	map->full_map[i] = NULL;
+	printf("\n\n%d\n", map->map_columns);
+	close (fd);
 }
