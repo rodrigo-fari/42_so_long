@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
+/*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:41:20 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/07/27 16:38:30 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/07/30 02:44:14 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,18 @@
 # include <stdlib.h>
 # include <stddef.h>
 
-//---------Printf_Library----------//
+//---------Gnl Buffer----------//
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 10
+# endif
+# ifndef MAX_FD
+#  define MAX_FD 1024
+# endif
+
+//---------Printf Library----------//
 # include <stdarg.h>
 
-//---------Get_Next_Line_Library----------//
+//---------Gnl Library----------//
 # include <fcntl.h>
 
 //---------Libft Functions---------//
@@ -35,6 +43,7 @@ int		ft_isprint(int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_atoi(const char *nptr);
+int		ft_strcmp(char *s1, char *s2);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
@@ -66,7 +75,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
 //---------Libft Bonus Functions---------//
-typedef struct s_list
+typedef struct		s_list
 {
 	void			*content;
 	struct s_list	*next;

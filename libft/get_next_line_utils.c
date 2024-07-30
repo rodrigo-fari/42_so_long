@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
+/*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 19:05:08 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/07/27 16:36:58 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/07/30 03:15:11 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 char	*ft_strcpy(char *src, char *dest, int param)
 {
@@ -62,25 +62,6 @@ char	*ft_char_strjoin(char *str1, char *str2)
 	while (str2 && str2[j])
 		ptr[i++] = str2[j++];
 	free(str1);
-	return (ptr);
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	unsigned char	*ptr;
-	size_t			i;
-	size_t			len;
-
-	len = nmemb * size;
-	ptr = malloc(len);
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		ptr[i] = 0;
-		i++;
-	}
 	return (ptr);
 }
 
