@@ -11,7 +11,7 @@ MLX_FLAGS= -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 MLX_LIB= $(MLX_PATH)/libmlx_Linux.a
 MLX_INCLUDE= -I/usr/include -Imlx
 SRC= so_long.c map_checker.c map_validation.c flood_fill.c \
-	
+	mem_clear.c 
 
 all: $(MLX_LIB) $(NAME)
 	clear
@@ -46,6 +46,6 @@ fclean: clean
 
 re: fclean all
 
-leak: all
+leak: re
 	valgrind --leak-check=full --show-leak-kinds=all \
 		./$(NAME) maps/valid_map/42big.ber

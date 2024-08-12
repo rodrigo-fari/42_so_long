@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:04:30 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/12 17:41:47 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:08:27 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ void	map_shape(t_map *map, char *map_path)
 		if (line[ft_strlen(line) - 1] != '\n')
 			read_line += 1;
 		map->map_lines += 1;
+		free(line);
 		line = get_next_line(fd);
 		if (read_line != line_size)
 			print_error("Error!\nMap is not rectangular.");
 	}
+	free(line);
 	close (fd);
 }
 
@@ -57,18 +59,17 @@ void	map_to_struct(t_map *map, char *map_path)
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
 	map->map_columns = (ft_strlen(line) - 1);
-	map->full_map = ft_calloc(sizeof(char *), map->map_lines);
-	map->flooded_map = ft_calloc(sizeof(char *), map->map_lines);
+	map->full_map = ft_calloc(sizeof(char *), map->map_lines + 1);
+	map->flooded_map = ft_calloc(sizeof(char *), map->map_lines + 1);
 	i = 0;
 	while (line)
 	{
 		map->full_map[i] = ft_strdup(line);
 		map->flooded_map[i] = ft_strdup(line);
-		free(line);
 		i++;
+		free(line);
 		line = get_next_line(fd);
 	}
-	map->full_map[i] = NULL;
-	map->flooded_map[i] = NULL;
+	free(line);
 	close (fd);
 }
