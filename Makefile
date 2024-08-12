@@ -5,6 +5,7 @@ CC= cc
 FLAGS= -Wall -Wextra -Werror
 RM= rm -rf
 OBJ= $(SRC:.c=.o)
+TEST= val.sh
 PATH_LIBFT= libft/
 MLX_PATH= mlx/
 MLX_FLAGS= -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
@@ -48,4 +49,7 @@ re: fclean all
 
 leak: re
 	valgrind --leak-check=full --show-leak-kinds=all \
-		./$(NAME) maps/valid_map/42big.ber
+		./$(NAME) maps/invalid_map/empty_line_in_between.ber
+
+test: re
+	./$(TEST)

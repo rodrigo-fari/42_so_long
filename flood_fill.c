@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:48:17 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/12 18:18:01 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:51:43 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	map_resources(t_map *map)
 		i++;
 	}
 	if (map->collectables <= 0)
-		print_error("Error!\nInvalid number of collectables.");
+		print_error("Error!\nInvalid number of collectables.", map);
 	if (map->player_number != 1)
-		print_error("Error!\nInvalid number of players.");
+		print_error("Error!\nInvalid number of players.", map);
 	if (map->exit_number != 1)
-		print_error("Error!\nInvalid number of exit points.");
+		print_error("Error!\nInvalid number of exit points.", map);
 }
 void	player_coord(t_map *map, t_player *play)
 {
@@ -90,7 +90,7 @@ void	final_map_verification(t_map *map)
 		while (map->flooded_map[i][j] && map->flooded_map[i][j] != '\n')
 		{
 			if (map->flooded_map[i][j] != 'G' && map->flooded_map[i][j] != '1')
-				print_error("Error!\nMap is no enclosed by walls.");
+				print_error("Error!\nMap not valid.", map);
 			j++;
 		}
 		i++;

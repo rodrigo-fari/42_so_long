@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:04:30 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/12 19:08:27 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/12 21:30:06 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	map_checker(t_map *map, char *map_path)
 {
-	map_folder(map_path);
-	file_checker(map_path);
-	map_extension(map_path);
+	map_folder(map_path, map);
+	file_checker(map_path, map);
+	map_extension(map_path, map);
 	map_shape(map, map_path);
 	map_to_struct(map, map_path);
 	map_resources(map);
@@ -34,6 +34,12 @@ void	map_shape(t_map *map, char *map_path)
 
 	fd = open(map_path, O_RDONLY);
 	line = get_next_line(fd);
+	if (!line || !ft_strcmp("\n", line))
+	{
+		close(fd);
+		free(line);
+		print_error("Error!\nInvalid map.", map);
+	}
 	line_size = ft_strlen(line);
 	while (line)
 	{
@@ -42,9 +48,12 @@ void	map_shape(t_map *map, char *map_path)
 			read_line += 1;
 		map->map_lines += 1;
 		free(line);
-		line = get_next_line(fd);
 		if (read_line != line_size)
-			print_error("Error!\nMap is not rectangular.");
+		{
+			close(fd);
+			print_error("Error!\nMap is not rectangular.", map);
+		}
+		line = get_next_line(fd);
 	}
 	free(line);
 	close (fd);

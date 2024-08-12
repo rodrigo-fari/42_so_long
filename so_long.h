@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 18:41:10 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/12 18:32:59 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:54:19 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ void	map_to_struct(t_map *map, char *map_path);
 //
 //
 //╔════════════════ map_validation.c ══════════════╗
-void	map_folder(char *map_path);
-void	file_checker(char *map_path);
-void	map_extension(char *map_path);
+void	map_folder(char *map_path, t_map *map);
+void	file_checker(char *map_path, t_map *map);
+void	map_extension(char *map_path, t_map *map);
 //╚════════════════════════════════════════════════╝
 //
 //
@@ -86,7 +86,7 @@ void	mem_clear(t_map *map);
 //╚════════════════════════════════════════════════╝
 //
 //╔═══════════════════ so_long.c ══════════════════╗
-void	print_error(char *str);
+void	print_error(char *str, t_map *map);
 //╚════════════════════════════════════════════════╝
 //
 //
