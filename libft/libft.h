@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 20:41:20 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/09 19:54:48 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:16:19 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		ft_toupper(int c);
 int		ft_atoi(const char *nptr);
 int		ft_strnlen(char *str, int c);
 int		ft_strcmp(char *s1, char *s2);
+int		ft_matrix_finder(char *str, int c);
 int		ft_str_chr_count(char *str, int c);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

@@ -13,7 +13,6 @@ MLX_INCLUDE= -I/usr/include -Imlx
 SRC= so_long.c map_checker.c map_validation.c flood_fill.c \
 	
 
-
 all: $(MLX_LIB) $(NAME)
 	clear
 	echo "╔══════════════════════════╗"
@@ -49,4 +48,4 @@ re: fclean all
 
 leak: all
 	valgrind --leak-check=full --show-leak-kinds=all \
-		./$(NAME) maps/valid_map/
+		./$(NAME) maps/valid_map/42big.ber

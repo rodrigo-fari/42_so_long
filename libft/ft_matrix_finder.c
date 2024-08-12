@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_chr_count.c                                 :+:      :+:    :+:   */
+/*   ft_matrix_finder.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/09 13:51:12 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/12 16:33:16 by rde-fari         ###   ########.fr       */
+/*   Created: 2024/08/12 17:14:55 by rde-fari          #+#    #+#             */
+/*   Updated: 2024/08/12 17:16:00 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-int		ft_str_chr_count(char *str, int c)
+int	ft_matrix_finder(char *str, int c)
 {
 	int		i;
-	int		a;
 
 	i = 0;
-	a = 0;
 	while (str[i])
 	{
 		if (str[i] == c)
-			a++;
+			return (i);
 		i++;
 	}
-	return (a);
+	return (0);
 }
