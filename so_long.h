@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
+/*   By: spooky <spooky@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 18:41:10 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/12 19:54:19 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/14 19:08:26 by spooky           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,17 @@
 # include "libft/libft.h"
 # include "mlx.h"
 # include <stdbool.h>
-# include <X11/keysym.h>
-# include <X11/Xlib.h>
 # include <fcntl.h>
 # include <sys/types.h>
+
+#ifdef __APPLE__
+# include <OpenGL/gl.h>
+# include <OpenGL/glu.h>
+# include <GLUT/glut.h>
+#else
+# include <X11/keysym.h>
+# include <X11/Xlib.h>
+#endif
 //╚════════════════════════════════════════════════╝
 //
 //
@@ -67,9 +74,10 @@ void	player_coord(t_map *map, t_player *play);
 //
 //
 //╔═════════════════ map_checker.c ════════════════╗
-void	map_shape(t_map *map, char *map_path);
+void	map_shape(t_map *map);
 void	map_checker(t_map *map, char *map_path);
 void	map_to_struct(t_map *map, char *map_path);
+void	map_count_lines(t_map *map, char *map_path);
 //╚════════════════════════════════════════════════╝
 //
 //

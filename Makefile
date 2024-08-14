@@ -1,45 +1,71 @@
 MAKEFLAGS += -s
-NAME= so_long
-LIBFT_A= libft/libft.a
-CC= cc
-FLAGS= -Wall -Wextra -Werror
-RM= rm -rf
-OBJ= $(SRC:.c=.o)
-TEST= val.sh
-PATH_LIBFT= libft/
-MLX_PATH= mlx/
-MLX_FLAGS= -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
-MLX_LIB= $(MLX_PATH)/libmlx_Linux.a
-MLX_INCLUDE= -I/usr/include -Imlx
-SRC= so_long.c map_checker.c map_validation.c flood_fill.c \
-	mem_clear.c 
 
-all: $(MLX_LIB) $(NAME)
+# Nome do executável
+NAME = so_long
+
+# Diretórios
+PATH_LIBFT = libft/
+MLX_PATH = mlx/
+
+# Bibliotecas
+LIBFT_A = $(PATH_LIBFT)libft.a
+MLX_LIB_MAC = $(MLX_PATH)libmlx.a
+MLX_LIB_LINUX = $(MLX_PATH)libmlx_Linux.a
+
+# Compilador e flags
+CC = cc
+FLAGS = -Wall -Wextra -Werror
+CFLAGS_MAC = $(FLAGS) -DGL_SILENCE_DEPRECATION -Imlx
+CFLAGS_LINUX = $(FLAGS) -Imlx -I/usr/include
+RM = rm -rf
+
+# Configurações do macOS
+MLX_MAC = -L$(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
+
+# Configurações do Linux
+MLX_LINUX = -L$(MLX_PATH) -lmlx -L/usr/lib/X11 -lXext -lX11
+
+# Sources e objetos
+SRC = so_long.c map_checker.c map_validation.c flood_fill.c \
+	mem_clear.c
+OBJ = $(SRC:.c=.o)
+
+# Detecta o sistema operacional
+UNAME_S := $(shell uname -s)
+
+# Configurações específicas por sistema operacional
+ifeq ($(UNAME_S), Darwin)
+	MLX_FLAGS = $(MLX_MAC)
+	CFLAGS = $(CFLAGS_MAC)
+else
+	MLX_FLAGS = $(MLX_LINUX)
+	CFLAGS = $(CFLAGS_LINUX)
+	MLX_LIB = $(MLX_LIB_LINUX)
+endif
+
+# Regras de compilação
+all: $(NAME)
 	clear
 	echo "╔══════════════════════════╗"
 	echo "║ ✅ Compiled Successfully!║"
 	echo "╚══════════════════════════╝"
 
 $(NAME): $(LIBFT_A) $(OBJ)
-	$(CC) -o $(NAME) $(OBJ) $(LIBFT_A) $(MLX_FLAGS)
-
-$(MLX_LIB):
-	make -C $(MLX_PATH)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIBFT_A) $(MLX_FLAGS)
 
 $(LIBFT_A):
 	$(MAKE) -C $(PATH_LIBFT)
 
-$(OBJ): $(SRC)
-	$(CC) $(FLAGS) -c $(SRC) $(MLX_INCLUDE)
-	
+$(OBJ): %.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ)
-	make clean -C ./libft
+	$(MAKE) clean -C $(PATH_LIBFT)
 
 fclean: clean
 	$(RM) $(NAME)
-	make fclean -C ./libft
+	$(MAKE) fclean -C $(PATH_LIBFT)
 	clear
 	echo "╔══════════════════════════╗"
 	echo "║ ✅ Cleaned Successfully! ║"
