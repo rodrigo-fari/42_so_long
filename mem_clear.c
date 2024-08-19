@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 18:29:52 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/12 21:09:53 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:45:38 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	mem_clear(t_map *map)
 	i = 0;
 	if(map->full_map)
 	{
-		while (map->full_map[i])
+		while (i <= map->map_lines)
 		{
 			free(map->full_map[i]);
 			free(map->flooded_map[i]);
