@@ -6,13 +6,13 @@
 /*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 12:04:30 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/19 18:00:51 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/20 18:10:58 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	map_checker(t_map *map, char *map_path)
+void	map_checker(t_data *data, t_map *map, char *map_path)
 {
 	map_folder(map_path, map);
 	file_checker(map_path, map);
@@ -24,6 +24,7 @@ void	map_checker(t_map *map, char *map_path)
 	player_coord(map, map->player);
 	exit_coord(map);
 	final_map_verification(map);
+	mlx_window(data, map);
 }
 
 void	map_shape(t_map *map)

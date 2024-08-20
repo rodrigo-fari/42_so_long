@@ -15,7 +15,8 @@ MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
 MLX_INCLUDE = -I/usr/include -Imlx
 
 # Source files
-SRC = so_long.c map_checker.c map_validation.c flood_fill.c mem_clear.c
+SRC = so_long.c map_checker.c map_validation.c flood_fill.c mem_clear.c \
+	mlx_window.c 
 OBJ = $(SRC:.c=.o)
 
 # Libraries
