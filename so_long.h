@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rde-fari <rde-fari@student.42poto.com>     +#+  +:+       +#+        */
+/*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 18:41:10 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/20 21:17:25 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/20 23:48:46 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,18 @@
 //
 //
 //
-//╔═════════════════════ Structs ═══════════════════╗
+//╔═════════════════ Player Structure ═══════════════╗
 typedef struct s_player
 {
 	int				pposx;
 	int				pposy;
 
 }		t_player;
-
+//╚═════════════════════════════════════════════════╝
+//
+//
+//
+//╔═════════════════ Data Structure ════════════════╗
 typedef struct s_data 
 {
 	void			*mlx;
@@ -60,7 +64,11 @@ typedef struct s_data
 	void			*img[6];
 	int				k;
 }		t_data;
-
+//╚═════════════════════════════════════════════════╝
+//
+//
+//
+//╔══════════════════ Map Structure ═════════════════╗
 typedef struct s_map
 {
 	char			**full_map;
@@ -106,6 +114,7 @@ void	map_extension(char *map_path, t_map *map);
 //╚═════════════════════════════════════════════════╝
 //
 //
+//
 //╔══════════════════ mem_clear.c ══════════════════╗
 void	mem_clear(t_map *map);
 //╚═════════════════════════════════════════════════╝
@@ -118,12 +127,18 @@ void	print_error(char *str, t_map *map);
 //
 //
 //
-//╔═════════════════ mlx_window.c ══════════════════╗
+//╔════════════════════ render.c ═══════════════════╗
 void	load_img(t_data *data);
+void	player_movement(t_map *map, int dx, int dy);
+void	image_to_display(t_data *data, t_map *map);
+//╚═════════════════════════════════════════════════╝
+//
+//
+//
+//╔════════════════ window_handler.c ═══════════════╗
 void	free_handler(t_data *data);
 void	mlx_window(t_data *data, t_map *map);
-int		key_handler(int keycode, t_data *data);
-void	image_to_display(t_data *data, t_map *map);
+int		key_handler(int keycode, t_map *map);
 //╚═════════════════════════════════════════════════╝
 //
 //
