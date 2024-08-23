@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 23:20:11 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/20 23:43:55 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/22 20:57:50 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,8 @@ void	load_img(t_data *data)
 	data->img[5] = mlx_xpm_file_to_image(data->mlx, "./textures/open_chest_x32.xpm", &size, &size);
 }
 
-void image_to_display(t_data *data, t_map *map)
+void image_to_display(t_data *data, t_map *map, int i, int j)
 {
-	int i;
-	int j;
-
-	i = 0;
 	while (i <= map->map_lines)
 	{
 		j = 0;
@@ -43,7 +39,12 @@ void image_to_display(t_data *data, t_map *map)
 			if (map->full_map[i][j] == 'P' && data->img[3])
 				mlx_put_image_to_window(data->mlx, data->window, data->img[3], (j * 32), (i * 32));
 			if (map->full_map[i][j] == 'E' && data->img[4])
-				mlx_put_image_to_window(data->mlx, data->window, data->img[4], (j * 32), (i * 32));
+			{
+				if (map->collectables == 0)
+					mlx_put_image_to_window(data->mlx, data->window, data->img[5], (j * 32), (i * 32));
+				else
+					mlx_put_image_to_window(data->mlx, data->window, data->img[4], (j * 32), (i * 32));
+			}
 			if (map->full_map[i][j] == 'C' && data->img[2])
 				mlx_put_image_to_window(data->mlx, data->window, data->img[2], (j * 32), (i * 32));
 			j++;
@@ -59,9 +60,24 @@ void	player_movement(t_map *map, int dx, int dy)
 
 	new_x = map->player->pposx + dx;
 	new_y = map->player->pposy + dy;
-	if (map->full_map[new_y][new_x] != '1')
+	if (map->full_map[new_y][new_x] == '1')
+		return ;
+	ft_printf("\nPlayer Movement: %d", ++map->player->movement);
+	if (map->full_map[new_y][new_x] == 'C')
+	{
+		map->collectables -= 1;
 		map->full_map[map->player->pposy][map->player->pposx] = '0';
+	}
+	map->full_map[map->player->pposy][map->player->pposx] = '0';
 	map->player->pposy = new_y;
 	map->player->pposx = new_x;
+	map->full_map[map->exit_y][map->exit_x] = 'E';
 	map->full_map[new_y][new_x] = 'P';
+	if (map->full_map[map->player->pposy][map->player->pposx] ==
+	map->full_map[map->exit_y][map->exit_x] && map->collectables
+	== 0)
+	{
+		ft_printf("\n🥳Congrats! You finished the game🥳\n");
+		free_handler(map);
+	}
 }

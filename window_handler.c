@@ -22,32 +22,43 @@ void	mlx_window(t_data *data, t_map *map)
 	data->mlx = mlx_init();
 	data->window = mlx_new_window(data->mlx, (x * 32), (y * 32), "so_long");
 	load_img(data);
-	image_to_display(data, map);
+	image_to_display(data, map, 0, 0);
 	mlx_key_hook(data->window, key_handler, map);
+	mlx_hook(data->window, 17, 0, free_handler, map);
 	mlx_loop(data->mlx);
 }
 
 int		key_handler(int keycode, t_map *map)
 {
 	if (keycode == ESC)
-		free_handler(map->data);
+		free_handler(map);
 	if (keycode == U_ARROW || keycode == W_KEY)
 		player_movement(map, 0, -1);
 	if (keycode == D_ARROW || keycode == S_KEY)
 		player_movement(map, 0, 1);
 	if (keycode == R_ARROW || keycode == D_KEY)
-		player_movement(map, -1, 0);
-	if (keycode == L_ARROW || keycode == A_KEY)
 		player_movement(map, 1, 0);
-	image_to_display(map->data, map);
+	if (keycode == L_ARROW || keycode == A_KEY)
+		player_movement(map, -1, 0);
+	image_to_display(map->data, map, 0, 0);
 	return (0);
 }
 //Problema do ft_calloc na main (1 error from 1 context).
-void	free_handler(t_data *data)
+int		free_handler(t_map *map)
 {
-	mlx_destroy_window(data->mlx, data->window);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
-	free(data);
+	int		i;
+
+	i = 0;
+	while (i < 6)
+	{
+		mlx_destroy_image(map->data->mlx, map->data->img[i]);
+		i++;
+	}
+	mlx_destroy_window(map->data->mlx, map->data->window);
+	mlx_destroy_display(map->data->mlx);
+	free(map->data->mlx);
+	free(map->data);
+	mem_clear(map);
 	exit(0);
+	return (0);
 }

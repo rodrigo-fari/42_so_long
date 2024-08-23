@@ -6,7 +6,7 @@
 /*   By: rde-fari <rde-fari@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 18:41:10 by rde-fari          #+#    #+#             */
-/*   Updated: 2024/08/20 23:48:46 by rde-fari         ###   ########.fr       */
+/*   Updated: 2024/08/22 21:04:28 by rde-fari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 //╚═════════════════════════════════════════════════╝
 //
 //
-//
 //╔════════════════════ Keycodes ═══════════════════╗
 # define ESC 65307
 # define W_KEY 119
@@ -50,6 +49,7 @@ typedef struct s_player
 {
 	int				pposx;
 	int				pposy;
+	int				movement;
 
 }		t_player;
 //╚═════════════════════════════════════════════════╝
@@ -82,7 +82,7 @@ typedef struct s_map
 	int				exit_y;
 	t_player		*player;
 	t_data			*data;
-}		t_map;
+}					t_map;
 
 //╚═════════════════════════════════════════════════╝
 //
@@ -117,6 +117,7 @@ void	map_extension(char *map_path, t_map *map);
 //
 //╔══════════════════ mem_clear.c ══════════════════╗
 void	mem_clear(t_map *map);
+
 //╚═════════════════════════════════════════════════╝
 //
 //
@@ -130,13 +131,13 @@ void	print_error(char *str, t_map *map);
 //╔════════════════════ render.c ═══════════════════╗
 void	load_img(t_data *data);
 void	player_movement(t_map *map, int dx, int dy);
-void	image_to_display(t_data *data, t_map *map);
+void image_to_display(t_data *data, t_map *map, int i, int j);
 //╚═════════════════════════════════════════════════╝
 //
 //
 //
 //╔════════════════ window_handler.c ═══════════════╗
-void	free_handler(t_data *data);
+int		free_handler(t_map *map);
 void	mlx_window(t_data *data, t_map *map);
 int		key_handler(int keycode, t_map *map);
 //╚═════════════════════════════════════════════════╝
